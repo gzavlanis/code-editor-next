@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import MonacoEditor from './MonacoEditor'; // Reusing the Monaco Editor for HTML input
+import React, { useState, useEffect, useRef } from "react";
+import MonacoEditor from "./MonacoEditor"; // Reusing the Monaco Editor for HTML input
 
 const HtmlEditor = ({ code, onCodeChange, theme }) => {
   const iframeRef = useRef(null); // Ref for the iframe to manipulate its content
@@ -22,10 +22,10 @@ const HtmlEditor = ({ code, onCodeChange, theme }) => {
   }, [code]); // Re-run this effect whenever the 'code' prop changes
 
   // Dynamic Tailwind classes for theming the editor and preview panels
-  const panelBg = theme === 'dark' ? 'bg-gray-800' : 'bg-white';
-  const panelBorder = theme === 'dark' ? 'border-gray-700' : 'border-gray-300';
-  const headerBg = theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200';
-  const headingText = theme === 'dark' ? 'text-gray-100' : 'text-gray-800';
+  const panelBg = theme === "dark" ? "bg-gray-800" : "bg-white";
+  const panelBorder = theme === "dark" ? "border-gray-700" : "border-gray-300";
+  const headerBg = theme === "dark" ? "bg-gray-700" : "bg-gray-200";
+  const headingText = theme === "dark" ? "text-gray-100" : "text-gray-800";
 
   return (
     <div className="flex flex-col lg:flex-row h-full w-full gap-4 p-4">
@@ -55,7 +55,7 @@ const HtmlEditor = ({ code, onCodeChange, theme }) => {
             ref={iframeRef}
             title="HTML Live Preview"
             className="w-full h-full bg-white rounded-md" // Ensure white background inside iframe for consistent rendering
-            style={{ border: 'none' }} // Remove default iframe border
+            style={{ border: "none" }} // Remove default iframe border
             sandbox="allow-scripts allow-same-origin" // Basic sandboxing for security
           />
         </div>

@@ -1,6 +1,6 @@
 "use client"; // Added this directive for client-side hooks like useState
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 // SidebarIcon component for reusability and tooltips
 const SidebarIcon = ({ icon: Icon, tooltip, onClick, isActive }) => {
