@@ -40,7 +40,14 @@ const Sidebar = ({ theme, currentLanguage, onLanguageChange, onSearchClick }) =>
         {" "}
         {/* Changed space-y-3 to space-y-2 */}
         <SidebarIcon icon={Home} tooltip="Home" onClick={() => handleNavigation("/")} isActive={pathname === "/" && currentLanguage === null} />
-        <SidebarIcon icon={Search} tooltip="Search" onClick={onSearchClick} isActive={false} />
+        <SidebarIcon
+          icon={Search}
+          text="Search"
+          tooltip="Search within the editor" // Tooltip for search icon
+          isActive={false} // Search is not a 'language' in the same way, so not 'active'
+          onClick={onSearchClick} // Call the search click handler
+          theme={theme}
+        />
       </div>
       {/* Language Selection Icons (New Section) */}
       <div className="flex flex-col space-y-2 mt-8 mb-4 px-1">

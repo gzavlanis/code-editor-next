@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import MonacoEditor from "./MonacoEditor"; // Reusing the Monaco Editor for HTML input
 
-const HtmlEditor = ({ code, onCodeChange, theme }) => {
+const HtmlEditor = ({ code, onCodeChange, theme, searchQuery, triggerSearchExecution }) => {
   const iframeRef = useRef(null); // Ref for the iframe to manipulate its content
 
   // Effect to update the iframe content whenever the code prop changes
@@ -40,6 +40,8 @@ const HtmlEditor = ({ code, onCodeChange, theme }) => {
             code={code}
             onCodeChange={onCodeChange}
             theme={theme}
+            searchQuery={searchQuery}
+            triggerSearchExecution={triggerSearchExecution}
           />
         </div>
       </div>

@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Editor } from "@monaco-editor/react";
 
-const MonacoEditor = ({ language, code, onCodeChange, theme }) => {
+const MonacoEditor = ({ language, code, onCodeChange, theme, searchQuery, triggerSearchExecution }) => {
   const editorRef = useRef(null);
   const [editorReady, setEditorReady] = useState(false);
 
@@ -29,6 +29,18 @@ const MonacoEditor = ({ language, code, onCodeChange, theme }) => {
     // Apply the theme immediately or when it changes
     monaco.editor.setTheme(theme === "dark" ? "my-dark-theme" : "vs-light");
   }
+
+  // Effect to trigger search when searchQuery changes
+useEffect(() => {
+    // When searchQuery changes, or when triggerSearchExecution changes (e.g., on Enter key press)
+    if (editorRef.current && searchQuery && editorRef.current.getContribution('editor.contrib.find')) {
+      // If the find widget is not open, open it and set the query.
+      // Otherwise, just trigger the find action which will use the existing query.
+      editorRef.current.focus(); // Ensure editor is focused to receive command
+       // Trigger Monaco's built-in find widget with the search query
+       editorRef.current.trigger('source', 'actions.find', { query: searchQuery });
+     }
+  }, [searchQuery, triggerSearchExecution]);
 
   // Update Monaco theme when the prop changes
   useEffect(() => {
