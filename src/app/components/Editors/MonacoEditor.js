@@ -3,13 +3,16 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Editor } from "@monaco-editor/react";
 
-const MonacoEditor = ({ language, code, onCodeChange, theme, searchQuery, triggerSearchExecution }) => {
+const MonacoEditor = ({ language, code, onCodeChange, theme, onEditorMounted }) => {
   const editorRef = useRef(null);
   const [editorReady, setEditorReady] = useState(false);
 
   // Set up the editor instance once it's mounted
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
+    if (onEditorMounted) {
+      onEditorMounted(editor); // Pass the editor instance back to the parent
+    }
     setEditorReady(true); // Mark editor as ready
 
     // Custom theme for dark mode if desired, or use built-in 'vs-dark'
@@ -30,18 +33,6 @@ const MonacoEditor = ({ language, code, onCodeChange, theme, searchQuery, trigge
     monaco.editor.setTheme(theme === "dark" ? "my-dark-theme" : "vs-light");
   }
 
-  // Effect to trigger search when searchQuery changes
-useEffect(() => {
-    // When searchQuery changes, or when triggerSearchExecution changes (e.g., on Enter key press)
-    if (editorRef.current && searchQuery && editorRef.current.getContribution('editor.contrib.find')) {
-      // If the find widget is not open, open it and set the query.
-      // Otherwise, just trigger the find action which will use the existing query.
-      editorRef.current.focus(); // Ensure editor is focused to receive command
-       // Trigger Monaco's built-in find widget with the search query
-       editorRef.current.trigger('source', 'actions.find', { query: searchQuery });
-     }
-  }, [searchQuery, triggerSearchExecution]);
-
   // Update Monaco theme when the prop changes
   useEffect(() => {
     if (editorReady && editorRef.current) {
@@ -53,7 +44,7 @@ useEffect(() => {
   }, [theme, editorReady]);
 
   // Handle code changes from the editor
-  function handleEditorChange(value, event) {
+  const handleEditorChange = (value, event) => {
     onCodeChange(value);
   }
 
